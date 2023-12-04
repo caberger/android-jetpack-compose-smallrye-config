@@ -16,6 +16,9 @@ import io.smallrye.config.PropertiesConfigSource;
 import io.smallrye.config.SmallRyeConfig;
 import io.smallrye.config.SmallRyeConfigBuilder;
 
+/** Read the configuration of the app from microprofile config.
+ * As an example we only read the greeting text.
+ */
 public class ApplicationConfiguration {
     public final String greeting;
 
@@ -31,6 +34,7 @@ public class ApplicationConfiguration {
         this.greeting = config.getValue("hello.world.greeting", String.class);
     }
 }
+/** Helper class to avoid the attempt of SmallRye config to read jar files on Android */
 class FixMissingJavaNioJarFileProviderConfigSourceProvider implements ConfigSourceProvider {
     Iterable<ConfigSource> configSources;
     @Override
