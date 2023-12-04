@@ -1,6 +1,5 @@
 package at.aberger.smallrye.config;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.rxjava3.subjects.BehaviorSubject;
 

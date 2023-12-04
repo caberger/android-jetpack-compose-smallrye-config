@@ -10,15 +10,16 @@ import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModelProvider
 import at.aberger.smallrye.config.HelloWorldModel
 import at.aberger.smallrye.config.HelloWorldViewModel
 import at.aberger.smallrye.config.ui.theme.SmallryeConfigTheme
 
 class ActivityMain {
     fun contentView(
-        activity: ComponentActivity,
-        viewModel: HelloWorldViewModel
+        activity: ComponentActivity
     ): ComposeView {
+        var viewModel = ViewModelProvider(activity).get(HelloWorldViewModel::class.java)
         var contentView = ComposeView(activity)
         contentView.setContent {
             SmallryeConfigTheme {

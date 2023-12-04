@@ -10,7 +10,7 @@ public class MainActivity extends ComponentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         var viewModel = new ViewModelProvider(this).get(HelloWorldViewModel.class);
-        setContentView(new ActivityMain().contentView(this, viewModel));
+        setContentView(new ActivityMain().contentView(this));
         var config = new ApplicationConfiguration();
         viewModel.model.onNext(new HelloWorldModel(config.greeting));
     }
