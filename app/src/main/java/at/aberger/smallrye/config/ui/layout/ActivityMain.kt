@@ -19,8 +19,8 @@ class ActivityMain {
     fun contentView(
         activity: ComponentActivity
     ): ComposeView {
-        var viewModel = ViewModelProvider(activity).get(HelloWorldViewModel::class.java)
-        var contentView = ComposeView(activity)
+        val viewModel = ViewModelProvider(activity).get(HelloWorldViewModel::class.java)
+        val contentView = ComposeView(activity)
         contentView.setContent {
             SmallryeConfigTheme {
                 val model = viewModel.model.subscribeAsState(initial = HelloWorldModel()).value
