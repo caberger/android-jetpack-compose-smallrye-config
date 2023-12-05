@@ -47,14 +47,14 @@ implementation("io.smallrye.config:smallrye-config:3.4.4")
     }
 ```
 
-- open MainActivity.kt and add the following line after ```super.onCreate(savedInstanceState):
+- open MainActivity.kt and add the following line after ```super.onCreate(savedInstanceState)```:
 
 ```kotlin
     val config = ConfigProvider.getConfig().unwrap(SmallRyeConfig::class.java)
 ```
 
 - Start the project, it will display "Hello, Android!
-- In Project Explorter switch from "Android" to "Project" view
+- In Project Explorer switch from "Android" to "Project" view
 - Navigate to "app/src/main" and add a folder "resources" and below resources add a folder "META-INF"
 - Add a file "microprofile-config.properties" to the folder app/src/main/resources/META-INF
 - start the project again
