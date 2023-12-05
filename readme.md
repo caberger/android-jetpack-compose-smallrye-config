@@ -27,6 +27,7 @@ As a workaround we implement our own ConfigSourceProvider.
 
 ## How to reproduce the problem in a new empty Android start project
 
+- Download [Android Studio](https://developer.android.com/studio)
 - Start Android Studio
 - create a new Project "Empty Activity"
 - Under "Gradle Scripts" open build.gradle.tk (Module :app)
