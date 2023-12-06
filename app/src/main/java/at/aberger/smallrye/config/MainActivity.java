@@ -4,9 +4,6 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.spi.FileSystemProvider;
-import java.util.Enumeration;
 import java.util.Properties;
 import java.util.function.Consumer;
 
@@ -21,7 +18,7 @@ public class MainActivity extends ComponentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            consumeAsPaths(getClass().getClassLoader(), "META-INF/microprofile-config.properties", inputStream -> {
+            consumeAsInputStreams(getClass().getClassLoader(), "META-INF/microprofile-config.properties", inputStream -> {
                 var properties = new Properties();
                 try {
                     properties.load(inputStream);
@@ -38,12 +35,13 @@ public class MainActivity extends ComponentActivity {
         var config = new ApplicationConfiguration();
         viewModel.model.onNext(new HelloWorldModel(config.greeting));
     }
-    void consumeAsPaths(ClassLoader cl, String resource, Consumer<InputStream> consumer) throws IOException {
+    void consumeAsInputStreams(ClassLoader cl, String resource, Consumer<InputStream> consumer) throws IOException {
         final var resources = cl.getResources(resource);
         while (resources.hasMoreElements()) {
             final var res = resources.nextElement();
-            var is = res.openStream();
-            consumer.accept(is);
+            try (var is = res.openStream()) {
+                consumer.accept(is);
+            }
         }
     }
 }
