@@ -17,12 +17,11 @@ import at.aberger.smallrye.config.HelloWorldModel
 import at.aberger.smallrye.config.HelloWorldViewModel
 import at.aberger.smallrye.config.ui.theme.SmallryeConfigTheme
 
-
 class ActivityMain {
-    fun contentView(
-        activity: ComponentActivity
-    ): ComposeView {
+    fun contentView(activity: ComponentActivity): ComposeView {
+
         val contentView = ComposeView(activity)
+
         contentView.setContent {
             SmallryeConfigTheme {
                 val viewModel = ViewModelProvider(activity)[HelloWorldViewModel::class.java]

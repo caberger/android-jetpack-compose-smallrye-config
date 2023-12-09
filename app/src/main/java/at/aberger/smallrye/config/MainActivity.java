@@ -41,8 +41,7 @@ public class MainActivity extends ComponentActivity {
     void consumeAsInputStreams(ClassLoader cl, String resource, Consumer<InputStream> consumer) throws IOException {
         final var resources = cl.getResources(resource);
         while (resources.hasMoreElements()) {
-            final var res = resources.nextElement();
-            try (var is = res.openStream()) {
+            try (var is = resources.nextElement().openStream()) {
                 consumer.accept(is);
             }
         }
