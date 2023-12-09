@@ -1,15 +1,15 @@
 package at.aberger.smallrye.config;
+
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.activity.ComponentActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.function.Consumer;
-import java.util.function.Function;
-
-import androidx.activity.ComponentActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import at.aberger.smallrye.config.ui.layout.ActivityMain;
 
@@ -33,11 +33,10 @@ public class MainActivity extends ComponentActivity {
             throw new RuntimeException(e);
         }
         var viewModel = new ViewModelProvider(this).get(HelloWorldViewModel.class);
+        viewModel.store.subscribe(model -> Log.i(TAG, String.format("greeting changed: %s", model.greeting)));
         setContentView(new ActivityMain().contentView(this));
         var config = new ApplicationConfiguration();
-        io.reactivex.rxjava3.functions.Consumer<HelloWorldModel> log = model -> Log.i(TAG, String.format("greeting changed: %s", model.greeting()));
-        viewModel.model.subscribe(log);
-        viewModel.model.onNext(new HelloWorldModel(config.greeting));
+        viewModel.store.onNext(new HelloWorldModel(config.greeting));
     }
     void consumeAsInputStreams(ClassLoader cl, String resource, Consumer<InputStream> consumer) throws IOException {
         final var resources = cl.getResources(resource);

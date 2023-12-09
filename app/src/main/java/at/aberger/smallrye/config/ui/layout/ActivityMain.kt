@@ -1,6 +1,5 @@
 package at.aberger.smallrye.config.ui.layout
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,26 +16,21 @@ import androidx.lifecycle.ViewModelProvider
 import at.aberger.smallrye.config.HelloWorldModel
 import at.aberger.smallrye.config.HelloWorldViewModel
 import at.aberger.smallrye.config.ui.theme.SmallryeConfigTheme
-import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.Subject
+
 
 class ActivityMain {
     fun contentView(
         activity: ComponentActivity
     ): ComposeView {
-        val viewModel = ViewModelProvider(activity).get(HelloWorldViewModel::class.java).model
-        fun onClick() {
-            viewModel.onNext(HelloWorldModel("new Greeting"))
-        }
         val contentView = ComposeView(activity)
         contentView.setContent {
             SmallryeConfigTheme {
-                val model = viewModel.subscribeAsState(initial = HelloWorldModel()).value
+                val viewModel = ViewModelProvider(activity)[HelloWorldViewModel::class.java]
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting(model.greeting, { onClick() })
+                    Greeting(viewModel)
                 }
             }
         }
@@ -47,21 +41,23 @@ class ActivityMain {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    val tag: String? = ActivityMain::class.simpleName;
+    val viewModel = HelloWorldViewModel()
     SmallryeConfigTheme {
-        Greeting("Android", { Log.i(tag, "onclick()")})
+        Greeting(viewModel)
     }
+    viewModel.next { it.greeting = "Demo Preview" }
 }
 
 
 @Composable
-fun Greeting(greeting: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+fun Greeting(viewModel: HelloWorldViewModel, modifier: Modifier = Modifier) {
+    val state = viewModel.store.subscribeAsState(initial = HelloWorldModel())
     Column {
         Text(
-            text = greeting,
+            text = state.value.greeting,
             modifier = modifier
         )
-        Button(onClick = { onClick() } ) {
+        Button(onClick = { viewModel.next { it.greeting = "greeting changed" } } ) {
             Text("ok")
         }
     }

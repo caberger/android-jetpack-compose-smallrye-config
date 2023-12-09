@@ -4,6 +4,13 @@ This example shows an Android application implemented in Java using Jetpack Comp
 
 ## Building
 
+Install gradle and gradle wrapper
+
+```bash
+brew install gradle
+gradle wrapper
+```
+
 Download the latest version of Android Studio and open the project. Then create a simulator device and debug it on that device.
 
 ## Configuration

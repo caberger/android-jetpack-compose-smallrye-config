@@ -1,7 +1,11 @@
 package at.aberger.smallrye.config;
 
-public record HelloWorldModel(String greeting) {
-    public HelloWorldModel() {
-        this("");
+public class HelloWorldModel {
+    public String greeting = "";
+
+    public HelloWorldModel() {}
+
+    public HelloWorldModel(String greeting) {
+        this.greeting = greeting;
     }
 }

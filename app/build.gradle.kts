@@ -55,7 +55,7 @@ dependencies {
     val lifecycle_version = "2.6.2"
 
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
     implementation("androidx.activity:activity-compose:1.8.1")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.ui:ui")
@@ -72,6 +72,7 @@ dependencies {
     implementation("io.reactivex.rxjava3:rxjava:3.1.8")
     implementation("androidx.compose.runtime:runtime-rxjava3:1.5.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.3")
 
     implementation("io.smallrye.config:smallrye-config:3.4.4")
 }
