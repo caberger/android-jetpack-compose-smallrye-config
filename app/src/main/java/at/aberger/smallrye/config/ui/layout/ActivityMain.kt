@@ -1,5 +1,6 @@
 package at.aberger.smallrye.config.ui.layout
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,21 +17,26 @@ import androidx.lifecycle.ViewModelProvider
 import at.aberger.smallrye.config.HelloWorldModel
 import at.aberger.smallrye.config.HelloWorldViewModel
 import at.aberger.smallrye.config.ui.theme.SmallryeConfigTheme
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 
 class ActivityMain {
     fun contentView(
         activity: ComponentActivity
     ): ComposeView {
-        val viewModel = ViewModelProvider(activity).get(HelloWorldViewModel::class.java)
+        val viewModel = ViewModelProvider(activity).get(HelloWorldViewModel::class.java).model
+        fun onClick() {
+            viewModel.onNext(HelloWorldModel("new Greeting"))
+        }
         val contentView = ComposeView(activity)
         contentView.setContent {
             SmallryeConfigTheme {
-                val model = viewModel.model.subscribeAsState(initial = HelloWorldModel()).value
+                val model = viewModel.subscribeAsState(initial = HelloWorldModel()).value
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting(model.greeting)
+                    Greeting(model.greeting, { onClick() })
                 }
             }
         }
@@ -41,23 +47,21 @@ class ActivityMain {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
+    val tag: String? = ActivityMain::class.simpleName;
     SmallryeConfigTheme {
-        Greeting("Android")
+        Greeting("Android", { Log.i(tag, "onclick()")})
     }
 }
 
-fun onClick() {
-    TODO("Not yet implemented")
-}
 
 @Composable
-fun Greeting(greeting: String, modifier: Modifier = Modifier) {
+fun Greeting(greeting: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Column {
         Text(
             text = greeting,
             modifier = modifier
         )
-        Button(onClick = { onClick() }) {
+        Button(onClick = { onClick() } ) {
             Text("ok")
         }
     }
