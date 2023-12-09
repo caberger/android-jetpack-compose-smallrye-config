@@ -1,7 +1,9 @@
 package at.aberger.smallrye.config.ui.layout
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -44,10 +46,19 @@ fun GreetingPreview() {
     }
 }
 
+fun onClick() {
+    TODO("Not yet implemented")
+}
+
 @Composable
 fun Greeting(greeting: String, modifier: Modifier = Modifier) {
-    Text(
-        text = greeting,
-        modifier = modifier
-    )
+    Column {
+        Text(
+            text = greeting,
+            modifier = modifier
+        )
+        Button(onClick = { onClick() }) {
+            Text("ok")
+        }
+    }
 }

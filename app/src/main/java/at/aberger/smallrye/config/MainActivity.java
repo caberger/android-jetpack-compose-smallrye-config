@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 
 import androidx.activity.ComponentActivity;
 import androidx.lifecycle.ViewModelProvider;
+
 import at.aberger.smallrye.config.ui.layout.ActivityMain;
 
 public class MainActivity extends ComponentActivity {
