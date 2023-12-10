@@ -5,6 +5,7 @@ import org.eclipse.microprofile.config.spi.ConfigSource;
 import org.eclipse.microprofile.config.spi.ConfigSourceProvider;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.URL;
 import java.util.concurrent.CompletionException;
 import java.util.function.Function;
@@ -22,7 +23,7 @@ public class ApplicationConfiguration {
     public final String greeting;
 
     public ApplicationConfiguration() {
-        //var config = ConfigProvider.getConfig().unwrap(SmallRyeConfig.class); // <=== does not work
+        //var config = ConfigProvider.getConfig().unwrap(SmallRyeConfig.class); // <=== does not work (yet)
 
         var config = new SmallRyeConfigBuilder()
                 .forClassLoader(getClass().getClassLoader())
@@ -44,7 +45,7 @@ class FixMissingJavaNioJarFileProviderConfigSourceProvider implements ConfigSour
                 try {
                     return new PropertiesConfigSource(url);
                 } catch(IOException e) {
-                    throw new CompletionException(e);
+                    throw new UncheckedIOException(e);
                 }
             };
             configSources = Stream.of("application.properties", "META-INF/microprofile-config.properties")
